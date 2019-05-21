@@ -2,49 +2,79 @@ import React from 'react';
 import {  withRouter } from 'react-router-dom';
 import qs from 'query-string';
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { searchTweets, changeSearchValue} from '../actions/actions';
+
 class Search extends React.Component {
     constructor(props) {
         super(props);
         
-        this.handleChange = this.handleChange.bind(this);
-        this.queryPath = this.queryPath.bind(this);
-        this.search = this.search.bind(this);
-        this.onKeyPress = this.onKeyPress.bind(this);
-        this.state = {text: this.queryPath() || ''};
+        // this.changeURl = this.changeURl.bind(this);
+        this.state = {};
     }
 
-    queryPath() {
+    componentWillMount() {
+        const { changeSearchValue, listOfPost, searchTweet } = this.props;
         const { location : {search : query} } = this.props;
-        const { pathValue } = qs.parse(query);        
-        return pathValue || ''; 
+        const { q } = qs.parse(query);  
+        if(q !== undefined) {
+            changeSearchValue(q); 
+        }
+        if (listOfPost===''){
+            searchTweet(q);
+        }
     }
 
-    handleChange(e){
-        this.setState({text : e.target.value});
-    }
-
-    onKeyPress(e) {
-		if (e.key === 'Enter') {
-			this.search();
-		}
-	}
-
-    search(){
-        const searchString = qs.stringify({pathValue: this.state.text});
+    changeURl(searchText){
+        const searchString = qs.stringify({q: searchText});
         this.props.history.push({pathname: '/search', search: searchString} );
     }
     
     render() {
-        const text = this.state.text;
+        const { searchText, changeSearchValue, searchTweet } = this.props;
+
         return (
-            <div className = 'search'>
-                <input value = {text}
-                onKeyPress={this.onKeyPress}
-                onChange = {this.handleChange}/>
-                <button onClick = {this.search} >Search</button>
-            </div>
+
+                <div className = 'search'>
+                    <h4>{searchText}</h4>
+                    <input value = {searchText}
+                    onKeyPress = {e=> {
+                        if(e.key==='Enter'){
+                            this.changeURl(searchText);
+                            searchTweet(searchText);
+                        }
+                    }}
+                    onChange = {(event) => {
+                        changeSearchValue(event.target.value);
+                    }}
+                    />
+                    <button 
+                    onClick = {e=>{
+                        this.changeURl(searchText);
+                        searchTweet(searchText);
+                    }}
+                     >
+                        Search
+                    </button>
+                </div>
+            
         )
     };
 }
 
-export default withRouter(Search);
+const putStateToProps = (state) => {
+    return {
+        searchText: state.text,
+        listOfPost: state.posts,
+    };
+};
+
+const putActionsToProps = (dispatch) => {
+    return {
+        searchTweet: bindActionCreators(searchTweets,dispatch),
+        changeSearchValue: bindActionCreators(changeSearchValue, dispatch)
+    };
+};
+
+export default connect(putStateToProps, putActionsToProps)(withRouter(Search));

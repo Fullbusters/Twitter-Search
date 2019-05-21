@@ -1,3 +1,2 @@
 ### 'npm install'
-### `npm start`
-### 'npm run server'
+### `npm start` in other terminal ### 'npm run server'
