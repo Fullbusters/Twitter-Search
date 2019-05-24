@@ -11,14 +11,13 @@ import { store } from './store/store'
 
 
 ReactDOM.render((   
-    <Provider store = {store}>
-        <BrowserRouter>
-            <Switch>
-                <Route path='/' component={App} />
-            </Switch> 
-        </BrowserRouter>
-    </Provider>
-    
+  <Provider store = {store}>
+    <BrowserRouter>
+      <Switch>
+        <Route path='/' component={App} />
+      </Switch> 
+    </BrowserRouter>
+  </Provider>  
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

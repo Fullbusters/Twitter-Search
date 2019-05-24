@@ -1,4 +1,4 @@
-import { ACTION_CHANGE_SEARCH_VALUE, LOAD_POST_SUCCESS } from './listactions';
+import { ACTION_CHANGE_SEARCH_VALUE, LOAD_TWEET_SUCCESS, ACTION_SAVE_POST } from './listactions';
 import { fetchGet } from '../url/url';
 
 export const changeSearchValue = (query) => {
@@ -7,11 +7,18 @@ export const changeSearchValue = (query) => {
         payload: query
     };
 };
-
+    
 export const loadPost = (query) => {
     return {
-        type: LOAD_POST_SUCCESS,
+        type: LOAD_TWEET_SUCCESS,
         payload: query,
+    };
+};
+
+export const actionSavePost = (query) => {
+    return {
+        type: ACTION_SAVE_POST,
+        payload: query
     };
 };
 

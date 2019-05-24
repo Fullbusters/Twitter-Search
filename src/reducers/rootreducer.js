@@ -1,17 +1,16 @@
-import { ACTION_CHANGE_SEARCH_VALUE,LOAD_POST_SUCCESS } from '../actions/listactions';
+import {postReducer}  from './postreducer';
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import { resourceReducer } from 'redux-resource';
 
-export const rootReducer = (state, action) => {
-    switch (action.type) {
-        case ACTION_CHANGE_SEARCH_VALUE:
-            return { ...state, text: action.payload}
-        case LOAD_POST_SUCCESS:
-            console.log('LOAD_POST_SUCCESS')
-            return { ...state, posts: action.payload};
-        default :
-            return state;
-    }
+
+const rootReducers = {
+  postReducer,
+  form: formReducer,
+  books: resourceReducer('books')
 }
 
+export const rootReducer = combineReducers(rootReducers);
 
 
 

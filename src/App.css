@@ -6,11 +6,35 @@
   margin-top: 20px;
   margin-bottom: 40px;
 }
-.post {
+
+.flex {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.red { 
+  color: red;
+}
+
+.lists {
+  margin: 20px;
+  padding: 10px;
+}
+
+.category {
+  background:  #e2e0e0;
+  border: 1px double black;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .postHeader {
